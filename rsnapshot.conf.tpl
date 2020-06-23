@@ -16,9 +16,8 @@
 # CONFIG FILE VERSION #
 #######################
 config_version	1.2
-snapshot_root	/var/rsnapshot/
+snapshot_root	/var/rsnapshot/${PREFIX}
 
-ssh_args	-p 22	-i /root/.ssh/id_rsa.pub	-o StrictHostKeyChecking=no
 cmd_ssh	/usr/bin/ssh
 cmd_cp	/bin/cp
 cmd_rm	/bin/rm
@@ -26,10 +25,12 @@ cmd_rsync	/usr/bin/rsync
 cmd_logger	/usr/bin/logger
 verbose	2
 loglevel	3
-logfile	/var/log/rsnapshot
+logfile	/var/log/rsnapshot.log
 lockfile	/var/run/rsnapshot.pid
-retain	hourly	6
-retain	daily	3
-retain	weekly	2
+retain	hourly	${RETAIN_HOURLY}
+retain	daily	${RETAIN_DAILY}
+retain	weekly	${RETAIN_WEEKLY}
+retain	monthly	${RETAIN_MONTHLY}
+retain	yearly	${RETAIN_YEARLY}
 rsync_short_args	-aL
-rsync_long_args	--delete --numeric-ids --relative --delete-excluded --rsync-path=/usr/bin/rsync
+rsync_long_args	--delete --numeric-ids --relative --delete-excluded
